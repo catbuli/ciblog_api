@@ -2,8 +2,8 @@
 
 namespace app\common;
 
-use app\client\model\Token;
 use app\common\Session;
+use app\ciblog\model\User;
 
 class TokenManage
 {
@@ -27,7 +27,7 @@ class TokenManage
         $header = apache_request_headers();
         $uid = $header['uid'];
         $token = $header['token'];
-        if (Session::get('uid') === (int) $uid && Session::get('token') === $token) {
+        if (User::get($uid) && Session::get('uid') === (int) $uid && Session::get('token') === $token) {
             return true;
         } else {
             return false;

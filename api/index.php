@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006-2016 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006-2018 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -10,14 +10,15 @@
 // +----------------------------------------------------------------------
 
 // [ 应用入口文件 ]
-header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-header('Access-Control-Allow-Methods: GET,POST,OPTIONS');
-header('Access-Control-Allow-Origin:http://127.0.0.1:80');
+namespace think;
+
+// 开启session
 session_start();
-// 定义应用目录
-define('APP_PATH', __DIR__ . '/application/');
-// 入口绑定到index控制器
-define('BIND_MODULE', 'index');
-// 加载框架引导文件
-require __DIR__ . '/thinkphp/start.php';
+
+// 加载基础文件
+require __DIR__ . '/thinkphp/base.php';
+
+// 支持事先使用静态方法设置Request对象和Config对象
+
+// 执行应用并响应
+Container::get('app')->run()->send();

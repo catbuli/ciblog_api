@@ -11,7 +11,7 @@ class Response
      * @param string $title 响应标题
      * @param string $message 响应信息
      * @param array $data 返回数据
-     * @return json
+     * @return JSON
      */
     public static function result(int $code, string $title = "", string $message = "", $data = [], $paging = [])
     {
