@@ -66,7 +66,7 @@ class Upload extends Controller
                         $file->status = 0;
                     }
                     $file->path = str_replace("\\", "/", $info->getSavename());
-                    $file->url = 'http://' . $_SERVER['SERVER_NAME'] . "/testapi/public/uploads/" . str_replace("\\", "/", $info->getSavename());
+                    $file->url = 'http://' . $_SERVER['SERVER_NAME'] . "/api/public/uploads/" . str_replace("\\", "/", $info->getSavename());
                     $file->save();
                     $fileList = $file->getList(['typeName' => 'id', 'type' => $aid]);
                 } else {
