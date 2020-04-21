@@ -60,48 +60,41 @@ class Article extends Model
                     ->field('aid')
                     ->limit($pagingDate, $paging['pageSize'])
                     ->select();
-                $whereList = [];
-                foreach ($list as $key => $value) {
-                    $whereList['aid'] = ['aid', '=', $value['aid']];
-                }
-                var_dump($whereList);
-                $dataList = Db::name("article")
-                    ->where($whereList)
-                    ->order('create_date desc')
-                    ->field('aid,title,create_date,pv,comment_count,cover_url,description,status')
-                    ->find();
-                var_dump($dataList);
-                // $dataList = [];
-                // foreach ($list as $value) {
-                //     array_push($dataList, Db::name("article")
-                //         ->where('aid', $value['aid'])
-                //         ->order('create_date desc')
-                //         ->field('aid,title,create_date,pv,comment_count,cover_url,description,status')
-                //         ->find());
-                // }
                 $total = Db::name('article_meta')
                     ->where("mid", $paging['type'])
                     ->where("type", "category")
                     ->count();
+                $whereList = [];
+                foreach ($list as $key => $value) {
+                    $whereList[] = ['aid', '=', $value['aid']];
+                }
+                $dataList = Db::name("article")
+                    ->whereOr($whereList)
+                    ->order('create_date desc')
+                    ->field('aid,title,create_date,pv,comment_count,cover_url,description,status')
+                    ->select();
                 $paging["total"] = $total;
                 return array("list" => $dataList, "paging" => $paging);
             case 'tag':
                 $list = Db::name('article_meta')
                     ->where("mid", $paging['type'])
                     ->where("type", "tag")
+                    ->field('aid')
                     ->limit($pagingDate, $paging['pageSize'])
                     ->select();
-                $dataList = [];
-                foreach ($list as $value) {
-                    array_unshift($dataList, Db::name("article")
-                        ->where('aid', $value['aid'])
-                        ->field('aid,title,create_date,pv,comment_count,cover_url,description,status')
-                        ->find());
-                }
                 $total = Db::name('article_meta')
                     ->where("mid", $paging['type'])
                     ->where("type", "tag")
                     ->count();
+                $whereList = [];
+                foreach ($list as $key => $value) {
+                    $whereList[] = ['aid', '=', $value['aid']];
+                }
+                $dataList = Db::name("article")
+                    ->whereOr($whereList)
+                    ->order('create_date desc')
+                    ->field('aid,title,create_date,pv,comment_count,cover_url,description,status')
+                    ->select();
                 $paging["total"] = $total;
                 return array("list" => $dataList, "paging" => $paging);
             case 'hot':
