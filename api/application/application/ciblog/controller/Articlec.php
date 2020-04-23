@@ -176,11 +176,11 @@ class Articlec extends Controller
                     ->order("create_date asc")
                     ->limit(0, 1)
                     ->find();
-                if ($article->status > 0) {
-                    $data = json_decode($article->draft);
-                    $data->aid = (int) $aid;
-                    $list["present"] = $data;
-                }
+                // if ($article->status > 0) {
+                //     $data = json_decode($article->draft);
+                //     $data->aid = (int) $aid;
+                //     $list["present"] = $data;
+                // }
                 return Response::result(201, "成功", "文章信息获取成功!", $list);
             } else {
                 return Response::result(404, "失败", "文章没有找到，或已被删除!");
