@@ -25,8 +25,7 @@ class Backups extends Controller
         try {
             if (TokenManage::checkToken()) {
                 $doc_root = $_SERVER['DOCUMENT_ROOT'];
-                $request_uri = $_SERVER['REQUEST_URI'];
-                $file_path_name = $doc_root . '/testapi/public/backups'; //保存到的路径
+                $file_path_name = $doc_root . '/api/public/backups'; //保存到的路径
                 $name = 'backup_' . date('YmdHis') . ".sql";
                 if (!file_exists($file_path_name)) {
                     mkdir($file_path_name, 0777);
@@ -41,28 +40,9 @@ class Backups extends Controller
                 if ($mess <= 0) {
                     $file_path = $file_path_name . "/" . $name;
                     if (file_exists($file_path)) {
-                        // // header('location: //' . $_SERVER['HTTP_HOST'] . '/api/public/backups/' . $name);
-                        // // exit();
-                        // // header('location:http://' . $_SERVER['HTTP_HOST'] . $file_path.);
-                        // // 打开文件
-                        // $open_file = fopen($file_path, "r");
-                        // //输入文件标签
-                        // header("Content-type: application/octet-stream");
-                        // header("Accept-Ranges: bytes");
-                        // header("Accept-Length: " . filesize($file_path));
-                        // header('Content-Disposition: attachment; filename="' . basename($file_path) . '"');
-                        // // // 清除缓存
-                        // // // ob_clean();
-                        // // // flush();
-                        // // // 输出文件内容
-                        // echo fread($open_file, filesize($file_path));
-                        // // // readfile($file_path);
-                        // // 关闭文件
-                        // fclose($open_file);
-                        // exit();
-                        // // // return Response::result(201, "备份成功！");
+                        // $download =  new \think\response\Download($file_path);
+                        return Response::result(201, "备份成功！", $_SERVER['HTTP_HOST'] . '/api/public/backups/' . $name);
                     }
-                    return Response::result(200, "备份成功！", $_SERVER['HTTP_HOST'] . $request_uri . '/' . $name);
                 } else {
                     return Response::result(400, "备份失败！", $mess);
                 }
