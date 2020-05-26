@@ -2,8 +2,8 @@
 /.vscode
 /vendor
 *.log
-public/backups/
-public/uploads/
+public/backups/*
+public/uploads/*
 thinkphp
 .env
 .DS_Store
