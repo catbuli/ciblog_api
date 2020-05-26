@@ -1,6 +1,8 @@
 /.idea
 /.vscode
 /vendor
+public/backups/*
+public/uploads/*
 *.log
 public/backups/
 public/uploads/
